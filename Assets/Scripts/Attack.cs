@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Attack : MonoBehaviour
 {
+
+    [SerializeField]private SwordBox sb;
+    [SerializeField]private float howLongAttack = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +21,9 @@ public class Attack : MonoBehaviour
     }
     void OnSword()
     {
+       
 
-        Debug.Log("Fire");
+        sb.ActivateAttack(howLongAttack);
 
     }
 }
