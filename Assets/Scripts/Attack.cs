@@ -140,6 +140,8 @@ public class Attack : MonoBehaviour
             bigAttackActivated = false;
             // sbBigAttack.ActivateAttack
             Debug.Log(attackPowerBigSword());
+            bigSwordHoldInTime = 0;
+
         }
 
 
