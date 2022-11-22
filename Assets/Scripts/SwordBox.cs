@@ -53,7 +53,7 @@ public class SwordBox : MonoBehaviour
                     Vector3 pushdirections = (c.gameObject.transform.position - transform.position).normalized;
 
                     c.gameObject.transform.Translate(pushdirections * force * Time.deltaTime);
-                    attack.AttackMeterIncrease(25);
+                    attack.AttackMeterIncrease(10);
 
                 }
 
@@ -110,11 +110,12 @@ public class SwordBox : MonoBehaviour
 
 
 
-    public void ActivateAttack(float attackDuration)
+    public void ActivateAttack(float attackDuration, float attackPower, float attackSize)
     {
         
         attackTime = attackDuration;
         buttonPressed = true;
         //Debug.Log(buttonPressed);
     }
+    
 }

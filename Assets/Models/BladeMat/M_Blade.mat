@@ -237,7 +237,7 @@ Material:
     - _SubsurfaceMask: 1
     - _SupportDecals: 1
     - _SurfaceType: 1
-    - _SwordSize: 0.82
+    - _SwordSize: 1
     - _Test: 0.3
     - _Test2: 0.85
     - _TexWorldScale: 1
