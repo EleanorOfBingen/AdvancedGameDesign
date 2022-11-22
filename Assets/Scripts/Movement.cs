@@ -14,15 +14,21 @@ public class Movement : MonoBehaviour
 
     private Vector3 movmentVector;
     [SerializeField] private float maximumSpeed = 10;
+    [SerializeField] private float minimumSpeed = 2;
     private Vector2 rightStickPosition;
 
     [SerializeField]private GameObject forwardPlayer;
 
 
-    
+    [SerializeField] private float gravityValue = 9.5f;
+
+
+
     private bool attacking;
     private float attackTime;
     private float attackPower;
+
+    private bool bigAttack;
 
     void Start()
     {
@@ -34,11 +40,15 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        characterController.Move(new Vector3(0, -gravityValue * Time.deltaTime, 0));
+
         forwardPlayer.transform.position = transform.position;
         if (leftStickPosition != Vector2.zero)
         {
 
-            movmentVector = new Vector3(leftStickPosition.x, 0, leftStickPosition.y) * maximumSpeed;
+            movmentVector = new Vector3(leftStickPosition.x, 0, leftStickPosition.y) * speedMovement();
 
         }
         else
@@ -86,6 +96,38 @@ public class Movement : MonoBehaviour
         attackPower = force;
         
 
+    }
+    private void OnBigSword()
+    {
+        if (!bigAttack)
+        {
+
+
+            bigAttack = true;
+        }
+        else
+        {
+
+            bigAttack = false;
+        }
+
+
+    }
+    private float speedMovement()
+    {
+        if (bigAttack)
+        {
+
+            return minimumSpeed;
+
+        }
+        else
+        {
+            return maximumSpeed;
+
+        }
+
+        
     }
 
 
