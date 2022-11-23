@@ -10,10 +10,37 @@ public class SwordBox : MonoBehaviour
     public List<Collider> col;
     [SerializeField] private Attack attack;
 
-    private float force = 10;
+    private float enemyPushForce = 10;
+    private float powerAttack;
+    private float sizeAttackBox;
+
+
+    private BoxCollider bc;
+    private SphereCollider sc;
+
+    private Vector3 bcOriginalSize;
+    private Vector3 bcSize;
+    private float scOriginalRadius;
+    private float scRadius; 
+
     // Start is called before the first frame update
     void Start()
     {
+        bc = GetComponent<BoxCollider>();
+        sc = GetComponent<SphereCollider>();
+        if (bc != null)
+        {
+
+            bcOriginalSize = bc.size;
+
+
+        }
+        if(sc != null)
+        {
+            scOriginalRadius = sc.radius;
+
+
+        }
         
     }
 
@@ -23,7 +50,7 @@ public class SwordBox : MonoBehaviour
 
 
 
-        if (buttonPressed)
+        if(buttonPressed)
         {
             if (attackTime < 0)
             {
@@ -32,9 +59,9 @@ public class SwordBox : MonoBehaviour
             }
 
             attackTime -= Time.deltaTime;
-            Debug.Log(buttonPressed);
+            //Debug.Log(buttonPressed);
 
-            BoxCollider bc = GetComponent<BoxCollider>();
+            // BoxCollider bc = GetComponent<BoxCollider>();
 
             //Collider[] col = Physics.OverlapBox(transform.position + (Vector3.forward * 0.3f), bc.size/2, transform.rotation);
             for (var i = col.Count - 1; i > -1; i--)
@@ -49,10 +76,10 @@ public class SwordBox : MonoBehaviour
                 if(c.gameObject.tag != "Player" && c != null)
                 {
 
-                    Destroy(c.gameObject, 0.5f);
+                    c.GetComponent<EnemyHP>().TakingDamage(powerAttack);
                     Vector3 pushdirections = (c.gameObject.transform.position - transform.position).normalized;
 
-                    c.gameObject.transform.Translate(pushdirections * force * Time.deltaTime);
+                    c.gameObject.transform.Translate(pushdirections * enemyPushForce * Time.deltaTime);
                     attack.AttackMeterIncrease(10);
 
                 }
@@ -114,6 +141,22 @@ public class SwordBox : MonoBehaviour
     {
         
         attackTime = attackDuration;
+        powerAttack = attackPower;
+        sizeAttackBox = attackSize;
+        Debug.Log(powerAttack);
+        if(bc != null)
+        {
+            bc.size = new Vector3 (bcOriginalSize.x * attackSize, bcOriginalSize.y, bcOriginalSize.z * attackSize);
+            Debug.Log("IHaveABoxCollider");
+
+        }
+        if(sc != null)
+        {
+            Debug.Log(attackSize);
+            sc.radius = scOriginalRadius * attackSize;
+            Debug.Log("IHaveASphereCollider");
+        }
+
         buttonPressed = true;
         //Debug.Log(buttonPressed);
     }
