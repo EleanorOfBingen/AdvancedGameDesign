@@ -19,7 +19,7 @@ public class Attack : MonoBehaviour
     
     [Header("Main Attack")]
     [SerializeField] private float mainAttackPushForward = 20;
-    [SerializeField] private float powerMainAttack = 1;
+    [SerializeField] private float powerMainAttack = 4;
     [SerializeField] private float[] attackDividers;
 
     private float attackMeterMin = 0;
@@ -34,8 +34,8 @@ public class Attack : MonoBehaviour
     [SerializeField] private float bigSwordHoldInTime;
     [SerializeField] private float bigAttackChargeupRate = 1;
     [SerializeField] private float bigSwordAttackPower;
-    [SerializeField] private float[] bigSwordHoldInPowerModifiers;
-
+    [SerializeField] private float[] bigSwordAttackAOESize;
+    [SerializeField] private float[] bigSwordAttackPowerModifier;
     private Movement movement;
   
     [Header("UI")]
@@ -58,12 +58,18 @@ public class Attack : MonoBehaviour
             attackDividers = new float[] {0.25f, 0.5f, 0.75f, 1f };
 
         }
-        if(bigSwordHoldInPowerModifiers.Length == 0)
+        if(bigSwordAttackAOESize.Length == 0)
         {
-            bigSwordHoldInPowerModifiers = new float[] { 2, 3, 4, 5};
+            bigSwordAttackAOESize = new float[] { 1, 2, 3, 4};
 
 
         }
+        if(bigSwordAttackPowerModifier.Length == 0)
+        {
+            bigSwordAttackPowerModifier = new float[] { 1, 2, 3, 4 };
+
+        }
+
     }
 
     // Update is called once per frame
@@ -112,7 +118,7 @@ public class Attack : MonoBehaviour
     {
         if (attackMeter >= minumumSword)
         {
-            sbMainAttack.ActivateAttack(howLongAttack, attackPowerMain(), attackPowerMain());
+            sbMainAttack.ActivateAttack(howLongAttack, MainAttackPower(), MainAttackSize());
             attackMeter -= attackDecreesment;
             attackTimer = howLongAttack;
             movement.SwordAttack(howLongAttack, mainAttackPushForward);
@@ -130,16 +136,16 @@ public class Attack : MonoBehaviour
         if (!bigAttackActivated)
         {
 
-            Debug.Log("BIGSWORD");
+            //Debug.Log("BIGSWORD");
             bigAttackActivated = true;
         }
         else
         {
-            Debug.Log("BIIIIGSWOOOORD");
-            //sbMainAttack.ActivateAttack(howLongAttack, 0, 0);
+            //Debug.Log("BIIIIGSWOOOORD");
+            sbBigAttack.ActivateAttack(howLongAttack, AttackBigSwordPower(), AttackBigSwordAOE());
             bigAttackActivated = false;
             // sbBigAttack.ActivateAttack
-            Debug.Log(attackPowerBigSword());
+            Debug.Log(AttackBigSwordAOE());
             bigSwordHoldInTime = 0;
 
         }
@@ -156,7 +162,7 @@ public class Attack : MonoBehaviour
 
     }
 
-    private float attackPowerMain()
+    private float MainAttackSize()
     {
 
         float value = 0;
@@ -165,7 +171,7 @@ public class Attack : MonoBehaviour
         {
             
 
-            value = powerMainAttack * f;
+            value = f;
                       
 
             if (attackMeter < f)
@@ -183,7 +189,15 @@ public class Attack : MonoBehaviour
 
     }
 
-    private float attackPowerBigSword()
+    private float MainAttackPower()
+    {
+
+
+        return MainAttackSize() * powerMainAttack;
+
+    }
+
+    private float AttackBigSwordAOE()
     {
 
         float value = 0;
@@ -191,7 +205,7 @@ public class Attack : MonoBehaviour
         for (int i = 0; i < attackDividers.Length; i++)
         {
 
-            value = bigSwordAttackPower * bigSwordHoldInPowerModifiers[i];
+            value = bigSwordAttackAOESize[i];
 
 
             if (bigSwordHoldInTime < attackDividers[i])
@@ -203,12 +217,31 @@ public class Attack : MonoBehaviour
 
         }
  
+        return value;
+                        
+
+    }
+    private float AttackBigSwordPower()
+    {
+
+        float value = 0;
+
+        for (int i = 0; i < attackDividers.Length; i++)
+        {
+
+            value = bigSwordAttackPower * bigSwordAttackPowerModifier[i];
+
+
+            if (bigSwordHoldInTime < attackDividers[i])
+            {
+
+                break;
+
+            }
+
+        }
 
         return value;
-
-
-            
-
     }
 
 
