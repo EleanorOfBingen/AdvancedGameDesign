@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2158.6797, g: 2263.9824, b: 3290.5742, a: 1}
+  m_IndirectSpecularColor: {r: 2158.6875, g: 2263.9902, b: 3290.5742, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1318,6 +1318,16 @@ PrefabInstance:
       propertyPath: slMainAttack
       value: 
       objectReference: {fileID: 1514285101}
+    - target: {fileID: 4800168246868540715, guid: c2d3249192d2b4f4aa269e8b39ade244,
+        type: 3}
+      propertyPath: dashSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800168246868540715, guid: c2d3249192d2b4f4aa269e8b39ade244,
+        type: 3}
+      propertyPath: dashDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4800168246868540716, guid: c2d3249192d2b4f4aa269e8b39ade244,
         type: 3}
       propertyPath: m_Name
