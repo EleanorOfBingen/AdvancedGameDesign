@@ -44,6 +44,8 @@ public class Attack : MonoBehaviour
     [SerializeField] private Slider slBigAttack;
 
 
+    private float dashingFloat;
+
 
 
 
@@ -242,6 +244,13 @@ public class Attack : MonoBehaviour
         }
 
         return value;
+    }
+
+    public void Dashing(float duration, float swordDeacreasment)
+    {
+
+
+
     }
 
 
