@@ -22,7 +22,14 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private float gravityValue = 9.5f;
 
+    [Header("Dashing")]
+    [SerializeField] private float dashDuration = 0.5f;
+    private float maxDashDuration;
+    [SerializeField] private bool dashing;
+    [SerializeField] private float dashSpeed = 20;
 
+
+    [SerializeField] private Attack attack;
 
     private bool attacking;
     private float attackTime;
@@ -33,46 +40,66 @@ public class Movement : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-
+        maxDashDuration = dashDuration;
+        attack = GetComponent<Attack>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-        characterController.Move(new Vector3(0, -gravityValue * Time.deltaTime, 0));
-
-        forwardPlayer.transform.position = transform.position;
-        if (leftStickPosition != Vector2.zero)
+        if (dashing)
         {
+            dashDuration -= Time.deltaTime;
 
-            movmentVector = new Vector3(leftStickPosition.x, 0, leftStickPosition.y) * speedMovement();
-
-        }
-        else
-        {
-
-            movmentVector = new Vector3(0, 0, 0);
-
-
-        }
-        if (attacking)
-        {
-           characterController.Move(forwardPlayer.transform.forward * attackPower * Time.deltaTime);
-           attackTime -= Time.deltaTime;
-           if(attackTime < 0)
+            characterController.Move(forwardPlayer.transform.forward * dashSpeed * Time.deltaTime);
+            if(dashDuration <= 0)
             {
-                attacking = false;
+                dashing = false;
 
             }
+
+
         }
         else
         {
 
-            characterController.Move(movmentVector * Time.deltaTime);
+            characterController.Move(new Vector3(0, -gravityValue * Time.deltaTime, 0));
+
+            forwardPlayer.transform.position = transform.position;
+            if (leftStickPosition != Vector2.zero)
+            {
+
+                movmentVector = new Vector3(leftStickPosition.x, 0, leftStickPosition.y) * speedMovement();
+
+            }
+            else
+            {
+
+                movmentVector = new Vector3(0, 0, 0);
+
+
+            }
+            if (attacking)
+            {
+                characterController.Move(forwardPlayer.transform.forward * attackPower * Time.deltaTime);
+                attackTime -= Time.deltaTime;
+                if (attackTime < 0)
+                {
+                    attacking = false;
+
+                }
+            }
+            else
+            {
+
+                characterController.Move(movmentVector * Time.deltaTime);
+            }
+
+
         }
+        
+
 
     }
 
@@ -128,6 +155,15 @@ public class Movement : MonoBehaviour
         }
 
         
+    }
+
+    private void OnDash()
+    {
+        Debug.Log("Dashing");
+        dashDuration = maxDashDuration;
+        dashing = true;
+
+
     }
 
 
