@@ -15,12 +15,13 @@ public class Attack : MonoBehaviour
     [SerializeField] private float attackMeter = 1;
     [SerializeField] private float attackDecreesment = 0.25f;
     [SerializeField] private float attackIncreasementRate = 0.1f;
-    [SerializeField] private float minumumSword = 0.25f;
+    //[SerializeField] private float minumumSword = 0.25f;
     
     [Header("Main Attack")]
     [SerializeField] private float mainAttackPushForward = 20;
-    [SerializeField] private float powerMainAttack = 4;
+    [SerializeField] private float basePowerMainAttack = 4;
     [SerializeField] private float[] attackDividers;
+    [SerializeField] private float[] attackDiviversPower;
 
     private float attackMeterMin = 0;
     private float attackMeterMax;
@@ -44,7 +45,11 @@ public class Attack : MonoBehaviour
     [SerializeField] private Slider slBigAttack;
 
 
-    private float dashingFloat;
+    [Header("Dashing")]
+    [SerializeField] private float dashingAttackPower = 2;
+    [SerializeField] private bool imDashing;
+    private float dashDuration;
+    
 
 
 
@@ -60,7 +65,13 @@ public class Attack : MonoBehaviour
             attackDividers = new float[] {0.25f, 0.5f, 0.75f, 1f };
 
         }
-        if(bigSwordAttackAOESize.Length == 0)
+        if (attackDiviversPower.Length == 0)
+        {
+
+            attackDiviversPower = attackDividers;
+
+        }
+        if (bigSwordAttackAOESize.Length == 0)
         {
             bigSwordAttackAOESize = new float[] { 1, 2, 3, 4};
 
@@ -68,7 +79,7 @@ public class Attack : MonoBehaviour
         }
         if(bigSwordAttackPowerModifier.Length == 0)
         {
-            bigSwordAttackPowerModifier = new float[] { 1, 2, 3, 4 };
+            bigSwordAttackPowerModifier = bigSwordAttackAOESize;
 
         }
 
@@ -77,6 +88,18 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (imDashing)
+        {
+            dashDuration -= Time.deltaTime;
+            if(dashDuration <= 0)
+            {
+
+                imDashing = false;
+
+            }
+
+
+        }
 
         if (bigAttackActivated)
         {
@@ -118,16 +141,17 @@ public class Attack : MonoBehaviour
     }
     private void OnSword()
     {
-        if (attackMeter >= minumumSword)
+        if (CanIDoStuff(attackDecreesment))
         {
             sbMainAttack.ActivateAttack(howLongAttack, MainAttackPower(), MainAttackSize());
             attackMeter -= attackDecreesment;
             attackTimer = howLongAttack;
             movement.SwordAttack(howLongAttack, mainAttackPushForward);
             attacking = true;
+            imDashing = false;
         }
-        //Debug.Log("attackpower" + attackPowerMain());
-        ///Debug.Log("attackmeter" + attackMeter);
+        Debug.Log("attackpower" + MainAttackPower());
+        Debug.Log("attackmeter" + attackMeter);
 
     }
 
@@ -147,7 +171,7 @@ public class Attack : MonoBehaviour
             sbBigAttack.ActivateAttack(howLongAttack, AttackBigSwordPower(), AttackBigSwordAOE());
             bigAttackActivated = false;
             // sbBigAttack.ActivateAttack
-            Debug.Log(AttackBigSwordAOE());
+            //Debug.Log(AttackBigSwordAOE());
             bigSwordHoldInTime = 0;
 
         }
@@ -194,8 +218,24 @@ public class Attack : MonoBehaviour
     private float MainAttackPower()
     {
 
+        float value = 0;
 
-        return MainAttackSize() * powerMainAttack;
+        for (int i = 0; i < attackDividers.Length; i++)
+        {
+
+            value = basePowerMainAttack * attackDiviversPower[i] * dashingAttackValue();
+
+
+            if (attackMeter < attackDividers[i])
+            {
+
+                break;
+
+            }
+
+        }
+
+        return value;
 
     }
 
@@ -246,10 +286,31 @@ public class Attack : MonoBehaviour
         return value;
     }
 
-    public void Dashing(float duration, float swordDeacreasment)
+    public void Dashing(float swordDecreasment, float dashDur)
+    {
+        attackMeter -= swordDecreasment;
+        dashDuration = dashDur;
+        imDashing = true;
+
+    }
+
+    private float dashingAttackValue()
+    {
+        if (imDashing)
+        {
+            return dashingAttackPower;
+        }
+        else
+        {
+            return 1;
+        }
+
+    }
+
+    public bool CanIDoStuff(float minimumStuff)
     {
 
-
+        return attackMeter >= minimumStuff;
 
     }
 
