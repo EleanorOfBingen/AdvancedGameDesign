@@ -36,7 +36,6 @@ public class Movement : MonoBehaviour
     private float attackPower;
 
     private bool bigAttack;
-
     void Start()
     {
         characterController = GetComponent<CharacterController>();
