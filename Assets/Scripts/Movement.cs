@@ -27,9 +27,9 @@ public class Movement : MonoBehaviour
     private float maxDashDuration;
     [SerializeField] private bool dashing;
     [SerializeField] private float dashSpeed = 20;
+    [SerializeField] private float dashingCost = 0.25f;
 
-
-    [SerializeField] private Attack attack;
+    private Attack attack;
 
     private bool attacking;
     private float attackTime;
@@ -121,7 +121,8 @@ public class Movement : MonoBehaviour
         attacking = true;
         attackTime = duration;
         attackPower = force;
-        
+        dashing = false;
+
 
     }
     private void OnBigSword()
@@ -159,10 +160,13 @@ public class Movement : MonoBehaviour
 
     private void OnDash()
     {
-        Debug.Log("Dashing");
-        dashDuration = maxDashDuration;
-        dashing = true;
-
+        if (attack.CanIDoStuff(dashingCost))
+        {
+            Debug.Log("Dashing");
+            dashDuration = maxDashDuration;
+            dashing = true;
+            attack.Dashing(dashingCost, dashDuration);
+        }
 
     }
 
