@@ -78,9 +78,10 @@ public class SwordBox : MonoBehaviour
 
                     c.GetComponent<EnemyHP>().TakingDamage(powerAttack);
                     Vector3 pushdirections = (c.gameObject.transform.position - transform.position).normalized;
-
+                    c.GetComponent<EnemyFollow>().imHit(1.5f);
                     c.gameObject.transform.Translate(pushdirections * enemyPushForce * Time.deltaTime);
                     attack.AttackMeterIncrease(10);
+                   
 
                 }
 
@@ -99,14 +100,14 @@ public class SwordBox : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if (col.IndexOf(other) < 0)
+        if (col.IndexOf(other) < 0 && other.tag != "Player")
         {
 
             col.Add(other);
-
+            Debug.Log(other.name);
 
         }
-        //Debug.Log(other.name);
+       
         if (buttonPressed && other.tag != "Player")
         {
            
