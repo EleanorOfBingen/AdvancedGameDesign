@@ -7,8 +7,9 @@ public class EnemyFollow : MonoBehaviour
 {
     public Transform player;
     NavMeshAgent enemyAgent;
+    private float timer;
 
-
+    private bool amIHit;
     void Start()
     {
         //Enemy have pathfinding
@@ -19,9 +20,33 @@ public class EnemyFollow : MonoBehaviour
 
     void Update()
     {
+        if (amIHit)
+        {
+            timer -= Time.deltaTime;
+            if(timer < 0)
+            {
+
+                amIHit = false;
+
+            }
+
+        }
+        else
+        {
+            enemyAgent.destination = player.transform.position;
+
+
+        }
         //Ai follow player
-        Debug.Log(player.transform.position);
-        enemyAgent.destination = player.transform.position;
+        //Debug.Log(player.transform.position);
+      
+    }
+    public void imHit(float duration)
+    {
+
+        timer = duration;
+        amIHit=true;
+
     }
 
 }
