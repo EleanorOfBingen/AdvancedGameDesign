@@ -208,7 +208,7 @@ Material:
     - _PPDMinSamples: 5
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
-    - _Power: 412500
+    - _Power: 75
     - _RayTracing: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
@@ -265,7 +265,7 @@ Material:
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 1, g: 0, b: 0.7647059, a: 0}
-    - _Color2: {r: 0.107608795, g: 0, b: 1, a: 0}
+    - _Color2: {r: 0.068923295, g: 0, b: 0.6509434, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
