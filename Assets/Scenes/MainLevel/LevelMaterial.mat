@@ -23,7 +23,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Terrain Material
+  m_Name: LevelMaterial
   m_Shader: {fileID: -6465566751694194690, guid: cfda8ba5e2421854dbca65fa643680b4,
     type: 3}
   m_Parent: {fileID: 0}
