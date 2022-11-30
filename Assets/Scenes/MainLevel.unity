@@ -10544,7 +10544,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &763762676
 GameObject:
@@ -11702,6 +11702,10 @@ PrefabInstance:
     - target: {fileID: 1444197510, guid: c2d3249192d2b4f4aa269e8b39ade244, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475439940, guid: c2d3249192d2b4f4aa269e8b39ade244, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1587568702, guid: c2d3249192d2b4f4aa269e8b39ade244, type: 3}
       propertyPath: m_AnchorMax.x
@@ -13917,7 +13921,7 @@ Terrain:
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 22ff8771d87ef27429e670136399094b, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: dbc9c66baab24b043a05d924096ffecc, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
