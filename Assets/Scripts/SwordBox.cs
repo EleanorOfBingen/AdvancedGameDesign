@@ -21,13 +21,21 @@ public class SwordBox : MonoBehaviour
     private Vector3 bcOriginalSize;
     private Vector3 bcSize;
     private float scOriginalRadius;
-    private float scRadius; 
+    private float scRadius;
+
+
+    private Vector3 originalSize;
+    private MeshRenderer mr;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         bc = GetComponent<BoxCollider>();
         sc = GetComponent<SphereCollider>();
+        mr = GetComponent<MeshRenderer>();
+        originalSize = transform.localScale;
+
         if (bc != null)
         {
 
@@ -52,6 +60,7 @@ public class SwordBox : MonoBehaviour
 
         if(buttonPressed)
         {
+            mr.enabled = true;
             if (attackTime < 0)
             {
 
@@ -90,6 +99,11 @@ public class SwordBox : MonoBehaviour
 
             col = new List<Collider>();
 
+
+        }
+        else
+        {
+            mr.enabled=false;
 
         }
         
@@ -147,14 +161,14 @@ public class SwordBox : MonoBehaviour
         Debug.Log(powerAttack);
         if(bc != null)
         {
-            bc.size = new Vector3 (bcOriginalSize.x * attackSize, bcOriginalSize.y, bcOriginalSize.z * attackSize);
+            transform.localScale = originalSize * attackSize;
             Debug.Log("IHaveABoxCollider");
 
         }
         if(sc != null)
         {
             Debug.Log(attackSize);
-            sc.radius = scOriginalRadius * attackSize;
+            transform.localScale = originalSize * attackSize;
             Debug.Log("IHaveASphereCollider");
         }
 

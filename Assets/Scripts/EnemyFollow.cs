@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyFollow : MonoBehaviour
 {
+    private float distance;
+    private float maxDistance = 5f;
     public Transform player;
     NavMeshAgent enemyAgent;
     private float timer;
